@@ -1,0 +1,3 @@
+[workspace]
+resolver = "3"
+members = ["module_gen_macro", "inner", "wrapper"]

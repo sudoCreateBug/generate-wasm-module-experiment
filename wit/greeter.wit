@@ -1,0 +1,19 @@
+package example:greeter;
+
+interface greeter {
+    /// The bakery's motto. The implementation returns the string in this
+    /// annotation, read at compile time.
+    /// @dist_gen("Fresh bread, every morning")
+    motto: func() -> string;
+
+    /// Greets a customer by name.
+    greet: func(name: string) -> string;
+
+    /// How many loaves to bake for a number of customers.
+    loaves-for: func(customers: u32) -> u32;
+}
+
+/// The plain module: implements `greeter` directly.
+world inner {
+    export greeter;
+}
