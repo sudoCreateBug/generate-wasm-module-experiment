@@ -323,17 +323,6 @@ fn passed_by_reference(resolve: &Resolve, ty: &Type) -> bool {
     }
 }
 
-// ---------------------------------------------------------------------------
-// dist_gen_str!
-// ---------------------------------------------------------------------------
-
-/// Expands to the contents of the first `@dist_gen(...)` annotation on a
-/// function, as a `&'static str`. If the contents are a single string literal
-/// (`@dist_gen("text")`), its value is used; otherwise the raw contents.
-///
-/// ```ignore
-/// let motto: &str = module_gen_macro::dist_gen_str!("../wit", "greeter", "motto");
-/// ```
 #[proc_macro]
 pub fn dist_gen_str(input: TokenStream) -> TokenStream {
     let args = parse_macro_input!(input as DistGenArgs);
@@ -405,9 +394,6 @@ fn expand_dist_gen_str(args: &DistGenArgs) -> Result<TokenStream2, String> {
     }})
 }
 
-/// Finds every `<ANNOTATION_PREFIX>(...)` in a doc comment and returns what
-/// is between the parentheses. Nested parentheses and quoted strings are
-/// respected; unbalanced parentheses and unterminated strings are an error.
 fn parse_annotations(text: &str) -> Result<Vec<String>, String> {
     let opener = format!("{ANNOTATION_PREFIX}(");
     let mut found = Vec::new();
@@ -454,9 +440,7 @@ fn parse_annotations(text: &str) -> Result<Vec<String>, String> {
     Ok(found)
 }
 
-// ---------------------------------------------------------------------------
 // Shared helpers
-// ---------------------------------------------------------------------------
 
 fn manifest_relative(path: &str) -> PathBuf {
     let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap_or_default();
